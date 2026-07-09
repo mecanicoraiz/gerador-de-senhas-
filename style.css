@@ -1,0 +1,160 @@
+/* Paleta de Cores em Tons de Azul Escuro */
+:root {
+    --fundo-app: #0B111E;         /* Azul muito escuro para o fundo da página */
+    --fundo-card: #151F32;        /* Azul escuro para os blocos/cards */
+    --fundo-texto: #1E2D4A;       /* Azul intermediário para botões e inputs */
+    --borda-azul: #2C436F;        /* Azul para as bordas dos elementos */
+    --azul-neon: #00D2FF;         /* Azul claro brilhante para destaques e textos principais */
+    --branco: #F0F4F8;            /* Branco levemente azulado para leitura confortável */
+}
+
+body {
+    background-color: var(--fundo-app);
+    color: var(--branco);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: var(--fundo-card);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Campo de Exibição da Senha */
+#campo-senha {
+    width: 100%;
+    background-color: var(--fundo-texto);
+    color: var(--azul-neon);
+    border: 2px solid var(--borda-azul);
+    border-radius: 6px;
+    padding: 15px;
+    font-size: 22px;
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.parametro-senha {
+    margin-bottom: 25px;
+}
+
+.parametro-senha__titulo {
+    color: var(--azul-neon);
+    margin-bottom: 12px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Controles do Tamanho (+ e -) */
+.parametro-senha-botoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.parametro-senha__botao {
+    background-color: var(--fundo-texto);
+    color: var(--branco);
+    border: 2px solid var(--borda-azul);
+    padding: 15px 25px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.parametro-senha__botao:hover {
+    background-color: var(--borda-azul);
+}
+
+.parametro-senha__texto {
+    background-color: var(--fundo-texto);
+    padding: 15px 30px;
+    border-top: 2px solid var(--borda-azul);
+    border-bottom: 2px solid var(--borda-azul);
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Checkboxes e Labels */
+.parametro-senha-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--azul-neon); /* Altera a cor interna do checkbox padrão */
+    margin-right: 12px;
+}
+
+label {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Estrutura das Barras de Força */
+.barra {
+    background-color: var(--fundo-texto);
+    height: 12px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+.forca {
+    height: 12px;
+    border-radius: 6px;
+    position: relative;
+    bottom: 12px;
+    transition: width 0.3s ease-in-out;
+}
+
+.parametro-senha-textos {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #A0AAB5;
+    margin-top: -5px;
+}
+
+/* Cores de Sinalização das Barras */
+.fraca {
+    width: 25%;
+    background-color: #E71B32;
+}
+
+.media {
+    width: 50%;
+    background-color: #FAF408;
+}
+
+.forte {
+    width: 100%;
+    background-color: #00FF85;
+}
+
+/* Texto de Contexto da Entropia */
+.entropia {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #A0AAB5;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 6px;
+}
