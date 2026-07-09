@@ -1,113 +1,97 @@
-// Captura dos elementos do HTML
+// --- Elementos do DOM ---
 const numeroSenha = document.querySelector('.parametro-senha__texto');
 const botoes = document.querySelectorAll('.parametro-senha__botao');
-const campoSenha = document.querySelector('#campo-senha');
-const checkbox = document.querySelectorAll('.checkbox');
-const forcaSenha = document.querySelector('.forca');
-const valorEntropia = document.querySelector('.entropia');
+const checkboxes = document.querySelectorAll('.checkbox');
+const barraForca = document.querySelector('.forca');
 
+// Criar um campo na sua tela para exibir a senha gerada (ou use o que você tiver no HTML)
+// Aqui vamos simular que você tem um input ou container para mostrar a senha
+// Se você tiver uma classe específica para o campo da senha, mude aqui:
+const campoSenha = document.querySelector('.campo-senha') || document.body; 
+
+// --- Variáveis de Controle ---
 let tamanhoSenha = 12;
+numeroSenha.textContent = tamanhoSenha;
 
-// Conjuntos de caracteres
-const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVXYWZ';
-const letrasMinusculas = 'abcdefghijklmnopqrstuvxywz';
+// --- Dicionário de Caracteres ---
+const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz';
 const numeros = '0123456789';
-const simbolos = '!@%*?';
+const simbolos = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
-// Só ativa os eventos se os botões realmente existirem no HTML
-if (botoes.length >= 2) {
-    botoes[0].onclick = diminuiTamanho;
-    botoes[1].onclick = aumentaTamanho;
-}
+// --- Eventos dos Botões ---
+botoes[0].onclick = diminuiTamanho;
+botoes[1].onclick = aumentaTamanho;
 
-// Ativa o clique para os checkboxes existentes
-for (let i = 0; i < checkbox.length; i++) {
-    checkbox[i].onclick = geraSenha;
-}
-
-// Inicializa a tela com o valor padrão
-if (numeroSenha) {
-    numeroSenha.textContent = tamanhoSenha;
-}
-
-// Roda a primeira geração automática
-geraSenha();
+// Atualiza a senha sempre que marcar/desmarcar um checkbox
+checkboxes.forEach(checkbox => {
+    checkbox.onclick = gerarSenha;
+});
 
 function diminuiTamanho() {
     if (tamanhoSenha > 1) {
         tamanhoSenha--;
+        numeroSenha.textContent = tamanhoSenha;
+        gerarSenha(); // Gera uma nova senha com o novo tamanho
     }
-    if (numeroSenha) numeroSenha.textContent = tamanhoSenha;
-    geraSenha();
 }
 
 function aumentaTamanho() {
     if (tamanhoSenha < 20) {
         tamanhoSenha++;
+        numeroSenha.textContent = tamanhoSenha;
+        gerarSenha(); // Gera uma nova senha com o novo tamanho
     }
-    if (numeroSenha) numeroSenha.textContent = tamanhoSenha;
-    geraSenha();
 }
 
-function geraSenha() {
-    let alfabeto = '';
-
-    // Verifica de forma segura se cada checkbox existe e está marcado
-    if (checkbox[0] && checkbox[0].checked) alfabeto += letrasMaiusculas;
-    if (checkbox[1] && checkbox[1].checked) alfabeto += letrasMinusculas;
-    if (checkbox[2] && checkbox[2].checked) alfabeto += numeros;
-    if (checkbox[3] && checkbox[3].checked) alfabeto += simbolos;
-
-    let senha = '';
-
-    // Só gera a senha se houver pelo menos um grupo de caracteres selecionado
-    if (alfabeto.length > 0) {
-        for (let i = 0; i < tamanhoSenha; i++) {
-            let numeroAleatorio = Math.floor(Math.random() * alfabeto.length);
-            senha += alfabeto[numeroAleatorio];
-        }
-    } else {
-        senha = "Selecione uma opção";
-    }
-
-    if (campoSenha) {
-        campoSenha.value = senha;
-    }
+// --- Função Principal: Gerador de Senha ---
+function gerarSenha() {
+    let caracteresPermitidos = '';
     
-    classificaSenha(alfabeto.length);
-}
+    // Verifica quais checkboxes estão marcados (na ordem do seu HTML)
+    if (checkboxes[0].checked) caracteresPermitidos += letrasMaiusculas;
+    if (checkboxes[1].checked) caracteresPermitidos += letrasMinusculas;
+    if (checkboxes[2].checked) caracteresPermitidos += numeros;
+    if (checkboxes[3].checked) caracteresPermitidos += simbolos;
 
-function classificaSenha(tamanhoAlfabeto) {
-    if (!forcaSenha) return; // Se a barra não existir no HTML, ignora para não dar erro
-
-    let alfabetoValido = Math.max(1, tamanhoAlfabeto);
-    let entropia = tamanhoSenha * Math.log2(alfabetoValido);
-    
-    forcaSenha.classList.remove('fraca', 'media', 'forte');
-
-    if (tamanhoAlfabeto === 0) {
-        // Se nada estiver marcado, não mostra força nenhuma
-        forcaSenha.style.width = "0%";
-        if (valorEntropia) valorEntropia.textContent = "Marque pelo menos uma das opções acima.";
+    // Se nenhum checkbox estiver marcado, não gera nada
+    if (caracteresPermitidos === '') {
+        console.log('Selecione pelo menos uma opção!');
         return;
+    }
+
+    let senhaGerada = '';
+    // Loop para escolher caracteres aleatórios até dar o tamanho da senha
+    for (let i = 0; i < tamanhoSenha; i++) {
+        const indiceAleatorio = Math.floor(Math.random() * caracteresPermitidos.length);
+        senhaGerada += caracteresPermitidos[indiceAleatorio];
+    }
+
+    // Exibe a senha no console ou na tela
+    console.log("Senha Gerada:", senhaGerada);
+    
+    // Altera a barra de força dinamicamente
+    atualizarBarraForca();
+}
+
+// --- Função para Mudar a Barra de Força ---
+function atualizarBarraForca() {
+    // Conta quantos checkboxes estão marcados
+    let opcoesMarcadas = 0;
+    checkboxes.forEach(c => { if(c.checked) opcoesMarcadas++; });
+
+    // Limpa as classes anteriores
+    barraForca.classList.remove('fraca', 'media', 'forte');
+
+    // Lógica simples de força baseada no tamanho e opções
+    if (tamanhoSenha < 8 || opcoesMarcadas <= 1) {
+        barraForca.classList.add('fraca');
+    } else if (tamanhoSenha >= 8 && tamanhoSenha < 12 && opcoesMarcadas <= 3) {
+        barraForca.classList.add('media');
     } else {
-        // Reseta o estilo inline para voltar a usar as larguras do CSS (.fraca, .media, .forte)
-        forcaSenha.style.width = ""; 
-    }
-
-    // Regras de entropia
-    if (entropia > 57) {
-        forcaSenha.classList.add('forte');
-    } else if (entropia > 35 && entropia <= 57) {
-        forcaSenha.classList.add('media');
-    } else if (entropia <= 35) {
-        forcaSenha.classList.add('fraca');
-    }
-
-    // Calcula o tempo estimado em dias
-    let tempoEstimadoDias = Math.floor(2**entropia / (100e6 * 60 * 60 * 24));
-
-    if (valorEntropia) {
-        valorEntropia.textContent = "Um computador pode levar até " + tempoEstimadoDias + " dias para descobrir essa senha.";
+        barraForca.classList.add('forte');
     }
 }
+
+// Executa uma vez ao carregar a página para já iniciar com uma senha
+gerarSenha();
