@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Senhas Seguro</title>
+    <title>Gerador de Senhas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <main class="container">
         <div class="conteudo-senha">
-            <input name="senha" type="text" id="campo-senha" readonly>
+            <input name="senha" type="text" id="campo-senha" readonly value="Gerando...">
         </div>
 
         <div class="parametro-senha">
@@ -31,4 +31,36 @@
             </div>
             
             <div class="parametro-senha-checkbox">
-                <input name
+                <input name="minusculo" type="checkbox" id="minusculo" class="checkbox">
+                <label for="minusculo">Letras minúsculas</label>
+            </div>
+            
+            <div class="parametro-senha-checkbox">
+                <input name="numero" type="checkbox" id="numero" class="checkbox">
+                <label for="numero">Números</label>
+            </div>
+            
+            <div class="parametro-senha-checkbox">
+                <input name="simbolo" type="checkbox" id="simbolo" class="checkbox">
+                <label for="simbolo">Símbolos</label>
+            </div>
+        </div>
+
+        <div class="parametro-senha">
+            <h4 class="parametro-senha__titulo">Força da senha</h4>
+            <div class="barra"></div>
+            <div class="forca fraca"></div>
+            
+            <div class="parametro-senha-textos">
+                <p>Fraca</p>
+                <p>Média</p>
+                <p>Forte</p>
+            </div>
+
+            <p class="entropia"></p>
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>
