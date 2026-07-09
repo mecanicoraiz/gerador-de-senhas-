@@ -1,11 +1,11 @@
 /* Paleta de Cores em Tons de Azul Escuro */
 :root {
-    --fundo-app: #0B111E;         /* Azul muito escuro para o fundo da página */
-    --fundo-card: #151F32;        /* Azul escuro para os blocos/cards */
-    --fundo-texto: #1E2D4A;       /* Azul intermediário para botões e inputs */
-    --borda-azul: #2C436F;        /* Azul para as bordas dos elementos */
-    --azul-neon: #00D2FF;         /* Azul claro brilhante para destaques e textos principais */
-    --branco: #F0F4F8;            /* Branco levemente azulado para leitura confortável */
+    --fundo-app: #0B111E;         
+    --fundo-card: #151F32;        
+    --fundo-texto: #1E2D4A;       
+    --borda-azul: #2C436F;        
+    --azul-neon: #00D2FF;         
+    --branco: #F0F4F8;            
 }
 
 body {
@@ -28,7 +28,7 @@ body {
     max-width: 450px;
 }
 
-/* Campo de Exibição da Senha */
+/* Caixa de texto da senha */
 #campo-senha {
     width: 100%;
     background-color: var(--fundo-texto);
@@ -55,7 +55,7 @@ body {
     letter-spacing: 1px;
 }
 
-/* Controles do Tamanho (+ e -) */
+/* Alinhamento dos botões + e - */
 .parametro-senha-botoes {
     display: flex;
     justify-content: center;
@@ -87,7 +87,7 @@ body {
     font-weight: bold;
 }
 
-/* Checkboxes e Labels */
+/* Checkboxes */
 .parametro-senha-checkbox {
     display: flex;
     align-items: center;
@@ -98,7 +98,7 @@ body {
     width: 18px;
     height: 18px;
     cursor: pointer;
-    accent-color: var(--azul-neon); /* Altera a cor interna do checkbox padrão */
+    accent-color: var(--azul-neon); 
     margin-right: 12px;
 }
 
@@ -107,7 +107,7 @@ label {
     cursor: pointer;
 }
 
-/* Estrutura das Barras de Força */
+/* Barras de Força */
 .barra {
     background-color: var(--fundo-texto);
     height: 12px;
@@ -131,23 +131,11 @@ label {
     margin-top: -5px;
 }
 
-/* Cores de Sinalização das Barras */
-.fraca {
-    width: 25%;
-    background-color: #E71B32;
-}
+.fraca { width: 25%; background-color: #E71B32; }
+.media { width: 50%; background-color: #FAF408; }
+.forte { width: 100%; background-color: #00FF85; }
 
-.media {
-    width: 50%;
-    background-color: #FAF408;
-}
-
-.forte {
-    width: 100%;
-    background-color: #00FF85;
-}
-
-/* Texto de Contexto da Entropia */
+/* Bloco de texto da entropia */
 .entropia {
     margin-top: 20px;
     font-size: 14px;
@@ -157,4 +145,5 @@ label {
     background: rgba(0, 0, 0, 0.2);
     padding: 10px;
     border-radius: 6px;
+    min-height: 40px;
 }
