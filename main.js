@@ -1,29 +1,24 @@
-// --- Elementos do DOM ---
 const numeroSenha = document.querySelector('.parametro-senha__texto');
 const botoes = document.querySelectorAll('.parametro-senha__botao');
 const checkboxes = document.querySelectorAll('.checkbox');
 const barraForca = document.querySelector('.forca');
 
-// Criar um campo na sua tela para exibir a senha gerada (ou use o que você tiver no HTML)
-// Aqui vamos simular que você tem um input ou container para mostrar a senha
-// Se você tiver uma classe específica para o campo da senha, mude aqui:
-const campoSenha = document.querySelector('.campo-senha') || document.body; 
+// Se não achar a classe .campo-senha, ele cria um alerta ou usa o fundo da página
+const campoSenha = document.querySelector('.campo-senha'); 
 
-// --- Variáveis de Controle ---
 let tamanhoSenha = 12;
-numeroSenha.textContent = tamanhoSenha;
+if(numeroSenha) numeroSenha.textContent = tamanhoSenha;
 
-// --- Dicionário de Caracteres ---
 const letrasMaiusculas = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const letrasMinusculas = 'abcdefghijklmnopqrstuvwxyz';
 const numeros = '0123456789';
 const simbolos = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
-// --- Eventos dos Botões ---
-botoes[0].onclick = diminuiTamanho;
-botoes[1].onclick = aumentaTamanho;
+if (botoes.length >= 2) {
+    botoes[0].onclick = diminuiTamanho;
+    botoes[1].onclick = aumentaTamanho;
+}
 
-// Atualiza a senha sempre que marcar/desmarcar um checkbox
 checkboxes.forEach(checkbox => {
     checkbox.onclick = gerarSenha;
 });
@@ -31,59 +26,56 @@ checkboxes.forEach(checkbox => {
 function diminuiTamanho() {
     if (tamanhoSenha > 1) {
         tamanhoSenha--;
-        numeroSenha.textContent = tamanhoSenha;
-        gerarSenha(); // Gera uma nova senha com o novo tamanho
+        if(numeroSenha) numeroSenha.textContent = tamanhoSenha;
+        gerarSenha();
     }
 }
 
 function aumentaTamanho() {
     if (tamanhoSenha < 20) {
         tamanhoSenha++;
-        numeroSenha.textContent = tamanhoSenha;
-        gerarSenha(); // Gera uma nova senha com o novo tamanho
+        if(numeroSenha) numeroSenha.textContent = tamanhoSenha;
+        gerarSenha();
     }
 }
 
-// --- Função Principal: Gerador de Senha ---
 function gerarSenha() {
     let caracteresPermitidos = '';
     
-    // Verifica quais checkboxes estão marcados (na ordem do seu HTML)
-    if (checkboxes[0].checked) caracteresPermitidos += letrasMaiusculas;
-    if (checkboxes[1].checked) caracteresPermitidos += letrasMinusculas;
-    if (checkboxes[2].checked) caracteresPermitidos += numeros;
-    if (checkboxes[3].checked) caracteresPermitidos += simbolos;
+    if (checkboxes[0]?.checked) caracteresPermitidos += letrasMaiusculas;
+    if (checkboxes[1]?.checked) caracteresPermitidos += letrasMinusculas;
+    if (checkboxes[2]?.checked) caracteresPermitidos += numeros;
+    if (checkboxes[3]?.checked) caracteresPermitidos += simbolos;
 
-    // Se nenhum checkbox estiver marcado, não gera nada
     if (caracteresPermitidos === '') {
-        console.log('Selecione pelo menos uma opção!');
+        if(campoSenha) campoSenha.textContent = "Selecione uma opção!";
         return;
     }
 
     let senhaGerada = '';
-    // Loop para escolher caracteres aleatórios até dar o tamanho da senha
     for (let i = 0; i < tamanhoSenha; i++) {
         const indiceAleatorio = Math.floor(Math.random() * caracteresPermitidos.length);
         senhaGerada += caracteresPermitidos[indiceAleatorio];
     }
 
-    // Exibe a senha no console ou na tela
-    console.log("Senha Gerada:", senhaGerada);
+    // Se achou o campo na tela, mostra nele. Se não, mostra no Console (F12)
+    if (campoSenha) {
+        campoSenha.textContent = senhaGerada;
+    } else {
+        console.log("Senha gerada (Insira a classe .campo-senha no HTML para ver na tela):", senhaGerada);
+    }
     
-    // Altera a barra de força dinamicamente
     atualizarBarraForca();
 }
 
-// --- Função para Mudar a Barra de Força ---
 function atualizarBarraForca() {
-    // Conta quantos checkboxes estão marcados
+    if (!barraForca) return;
+    
     let opcoesMarcadas = 0;
     checkboxes.forEach(c => { if(c.checked) opcoesMarcadas++; });
 
-    // Limpa as classes anteriores
     barraForca.classList.remove('fraca', 'media', 'forte');
 
-    // Lógica simples de força baseada no tamanho e opções
     if (tamanhoSenha < 8 || opcoesMarcadas <= 1) {
         barraForca.classList.add('fraca');
     } else if (tamanhoSenha >= 8 && tamanhoSenha < 12 && opcoesMarcadas <= 3) {
@@ -93,5 +85,5 @@ function atualizarBarraForca() {
     }
 }
 
-// Executa uma vez ao carregar a página para já iniciar com uma senha
+// Inicializa
 gerarSenha();
